@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" type="text/css" href="/static/css/style1.css">
+{% endblock %}
+
+
+
+
+
+{% block content %}
+<div style="border:5px"><div  style="display: flex;justify-content: center;align-items: center">
+<h2 >Se registro correctamente</h2></div>
+<br><br><br><br>
+
+<div style="display: flex;justify-content: center;align-items: center"><a href="/login" class="btn btn-primary active" role="button" >login</a>
+</div>
+</div>
+
+{% endblock %}
