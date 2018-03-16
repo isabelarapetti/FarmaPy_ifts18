@@ -1,2 +1,2 @@
-web: gunicorn  HomeController:app﻿
+web: gunicorn  HomeController.wsgi:application
  
