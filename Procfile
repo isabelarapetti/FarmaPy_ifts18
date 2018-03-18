@@ -1,2 +1,2 @@
-web: gunicorn  app.HomeController:app
+web: gunicorn  app.wsgi:application --log-file - 
  
