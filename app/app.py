@@ -146,7 +146,7 @@ def Cambio_pass():
                 flash("la contrasenia fue actualizada")
                 return redirect(url_for('login'))
                 #registro exitoso se creo la nueva contraseña
-        return render_template('nuevopass.html', form=form)
+        return render_template('nuevopass.html', form=form, usuario_autenticado=usuario_autenticado)
     else:
         return redirect(url_for('login'))
 
