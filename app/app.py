@@ -17,7 +17,7 @@ boot = Bootstrap(app)
 
 #--------validacion de usuario------------
 def validar(user, passw):
-    with open("csv/usuarios.csv", 'r',encoding="utf-8") as archivo:
+    with open("csv/usuarios.csv", 'r') as archivo:
         encontrado = False
         for linea in archivo:
             lista = linea.split(",")
@@ -37,21 +37,21 @@ def leerArchivoFar():
 
 #-------Aca se agrega un nuevo usuario-----------
 def agregar_usuario(usuario, password):
-    with open('csv/usuarios.csv', 'a', encoding="utf-8") as archivo:
+    with open('csv/usuarios.csv', 'a') as archivo:
         archivo.write('{},{}\n'.format(usuario, password))
 
 #-------Aca se cambia la contraseña--------------
 def cambiar_contrasenia(usuario, nuevopassword):
     datos = [usuario, nuevopassword]
-    with open('csv/usuarios.csv', 'r', encoding="utf-8") as archivo:
+    with open('csv/usuarios.csv', 'r') as archivo:
         filereader = csv.reader(archivo.readlines())
-    with open('csv/usuarios.csv', 'a', encoding="utf-8") as archivo:
+    with open('csv/usuarios.csv', 'w') as archivo:
         filewriter = csv.writer(archivo)
         for row in filereader:
             if row[0] == datos[0]:
-                filewriter.writerow(datos+'\n')
+                filewriter.writerow(datos)
             else:
-                filewriter.writerow(row+'\n')
+                filewriter.writerow(row)
 
 #----------- Lleva a la pagina de inicio ------------------------------------
 @app.route('/index', methods=['GET'])
@@ -122,7 +122,7 @@ def Ingre_usuario():
         return render_template('registroexitoso.html', form=form, mostrar_mje=True)
     else:
         if form.password.data != form.password1.data:
-            flash("Las contraseñas deben ser iguales")
+            flash("Las contrasenias deben ser iguales")
         return render_template('ingreso_usuario.html', form=form)
 
 # --------Cambio de Contraseña ----------
@@ -142,7 +142,9 @@ def Cambio_pass():
                 return render_template('nuevopass.html', form=form, mostrar_mje=True)
             else:
                 cambiar_contrasenia(nombre_usuario, form.password.data)
-                return render_template('registroexitoso.html', form=form, mostrar_mje=True)
+                session.pop('username')
+                flash("la contrasenia fue actualizada")
+                return redirect(url_for('login'))
                 #registro exitoso se creo la nueva contraseña
         return render_template('nuevopass.html', form=form)
     else:
